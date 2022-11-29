@@ -38,17 +38,17 @@ export default function Popup(props) {
               <div className="rprops.dataative p-4 flex-auto">
               <img class="w-full h-40" src="https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2020/05/1000-13-1590457037.jpeg" alt="Capsules"/>
             
-              
-           
+              <h6 class={(props.data.status==="active" &&  "text-green-600  text-2xl") || ((props.data.status==="retired" || props.data.status==="destroyed") && "text-red-600 text-2xl") || (props.data.status==="unknown" && "text-blue-600 text-2xl")}>
+              status:{props.data.status}
+            </h6>
+            
+            <h6 class="text-gray-700 text-base">
+            Capsule serial : {props.data.capsule_serial}
+            </h6>
             <h6 class="text-gray-700 text-base">
             Details : {props.data.details}
             </h6>
-            <h6 class="text-gray-700 text-base">
-            original launch: {props.data.original_launch}
-            </h6>
-            <h6 class="text-gray-700 text-base">
-            original launch unix: {props.data.original_launch_unix}
-            </h6>
+            
               </div>
               {/*footer*/}
               <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
