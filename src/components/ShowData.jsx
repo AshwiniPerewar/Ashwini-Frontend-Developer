@@ -3,7 +3,7 @@ import React, { useState,useEffect } from 'react'
 import Popup from "./Popup"
 const Showdata = () => {
     const[data,setData]=useState([]);
-    const[status,setStatus]=useState(["active","retired"]);
+    const[status,setStatus]=useState("");
     const[landings,setLandings]=useState(null);
     const[reuse,setReuse]=useState(null);
     useEffect(()=>
@@ -16,6 +16,15 @@ const Showdata = () => {
         .then((r)=>{console.log(r.data);setData(r.data)});
         else if(landings && reuse)
         axios.get(`https://api.spacexdata.com/v3/capsules?reuse_count=${reuse}&landings=${landings}&page=1&limit=5`)
+        .then((r)=>{console.log(r.data);setData(r.data)});
+        else if(status)
+        axios.get(`https://api.spacexdata.com/v3/capsules?status=${status}&limit=5`)
+        .then((r)=>{console.log(r.data);setData(r.data)});
+        else if(landings)
+        axios.get(`https://api.spacexdata.com/v3/capsules?landings=${landings}&limit=5`)
+        .then((r)=>{console.log(r.data);setData(r.data)});
+        else if(reuse)
+        axios.get(`https://api.spacexdata.com/v3/capsules?reuse_count=${reuse}&limit=5`)
         .then((r)=>{console.log(r.data);setData(r.data)});
         else
         axios.get(`https://api.spacexdata.com/v3/capsules?limit=5`)
@@ -45,8 +54,8 @@ const Showdata = () => {
         <option selected value="">Filter by status</option>
         <option value="active">Active</option>
         <option value="retired">Retired</option>
-        <option value="deactivated">Deactivated</option>
-        <option value="Unknown">unknown</option>
+        <option value="destroyed">Destroyed</option>
+        <option value="unknown">unknown</option>
     </select>
   </div>
 
@@ -96,8 +105,7 @@ const Showdata = () => {
     </select>
   </div>
 </div>
-    <div className='m-10 text-white text-center grid grid-cols-4 gap-6'>
-
+{data && <div className='m-10 text-white text-center grid grid-cols-4 gap-6'>
         {data.map((el)=>
         (
             <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
@@ -120,7 +128,8 @@ const Showdata = () => {
         <Popup data={el}/>
           </div>
         ))}
-    </div>
+    </div>} 
+    {!data && <h1 className=' text-white'>No Data Matching for Your Search</h1>}
     </>
 
   )
